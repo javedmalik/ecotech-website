@@ -1,0 +1,13 @@
+{
+  "name": "Ecotech Recyclers — Waste to Worth",
+  "short_name": "Ecotech",
+  "description": "India's trusted e-waste and scrap recycling company. DPIIT-recognized startup.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b1a0e",
+  "theme_color": "#22c55e",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
