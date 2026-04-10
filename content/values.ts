@@ -1,76 +1,29 @@
 export const valuesContent = {
   tagline: "Why Choose Us",
-  heading: "Built on Principles That Matter",
-  values: [
-    {
-      id: "integrity",
-      icon: "🤝",
-      title: "Integrity",
-      description:
-        "We conduct our business in an ethical, transparent, and honest manner — no hidden costs, no surprises.",
-      color: "eco-blue",
-    },
-    {
-      id: "commitment",
-      icon: "💎",
-      title: "Commitment",
-      description:
-        "We are committed to creating and delivering value to all our stakeholders — clients, partners, and the environment.",
-      color: "eco-green",
-    },
-    {
-      id: "responsibility",
-      icon: "⚖️",
-      title: "Responsibility",
-      description:
-        "We stand accountable for the actions and decisions of our team, ensuring every process meets environmental and legal standards.",
-      color: "eco-teal",
-    },
-    {
-      id: "excellence",
-      icon: "🚀",
-      title: "Excellence",
-      description:
-        "We boldly accept challenges to develop and deliver innovative solutions conforming to the highest standards of quality.",
-      color: "eco-lime",
-    },
-  ],
+  heading: "Why choose our waste disposal services",
+  description:
+    "ECOTECH RECYCLERS (OPC) PVT. LTD. is built on strong values that guide every action, decision, and solution we deliver for our clients and stakeholders.",
+
   whyUs: [
     {
-      icon: "📅",
-      title: "Convenient Scheduling",
+      title: "Integrity",
       description:
-        "Book scrap pickups at your preferred time — anytime, anywhere via our platform.",
+        "ECOTECH RECYCLERS (OPC) PVT. LTD. is resolved to conduct its business in an ethical, transparent and honest manner.",
     },
     {
-      icon: "🛡️",
-      title: "Verified Collectors",
+      title: "Commitment",
       description:
-        "All collectors are vetted, trained, and equipped to provide professional, trustworthy service.",
+        "ECOTECH RECYCLERS (OPC) PVT. LTD. is committed to create and deliver value to all its stakeholders.",
     },
     {
-      icon: "💰",
-      title: "Transparent Pricing",
+      title: "Responsibility",
       description:
-        "Real-time rates based on scrap type and weight — no hidden costs, ever.",
+        "ECOTECH RECYCLERS (OPC) PVT. LTD. stands accountable for the actions and decisions of its team and its team members.",
     },
     {
-      icon: "♻️",
-      title: "Sustainable Recycling",
+      title: "Excellence",
       description:
-        "Reduce your carbon footprint by ensuring materials are properly processed and recycled.",
-    },
-    {
-      icon: "🚛",
-      title: "Door-to-Door Collection",
-      description:
-        "No heavy lifting required. Our team comes directly to your doorstep.",
-    },
-    {
-      icon: "📊",
-      title: "Digital Tracking",
-      description:
-        "Track your pickup, weight, and payment in real time through our transparent system.",
+        "ECOTECH RECYCLERS (OPC) PVT. LTD. will boldly accept challenges to develop and deliver innovative solutions conforming to the highest standards of quality.",
     },
   ],
 };

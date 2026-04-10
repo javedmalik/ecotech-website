@@ -1,293 +1,219 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowLeft, ArrowRight, CalendarDays, Trash2, Truck } from "lucide-react";
 import { heroSlides } from "@/content/hero";
-
-const particles = Array.from({ length: 20 }, (_, i) => ({
-  id: i,
-  size: Math.random() * 6 + 3,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  duration: Math.random() * 8 + 6,
-  delay: Math.random() * 4,
-}));
 
 export default function HeroSlider() {
   const [current, setCurrent] = useState(0);
-  const [direction, setDirection] = useState(1);
-
-  const goTo = useCallback(
-    (index: number) => {
-      setDirection(index > current ? 1 : -1);
-      setCurrent(index);
-    },
-    [current]
-  );
 
   const next = useCallback(() => {
-    setDirection(1);
     setCurrent((c) => (c + 1) % heroSlides.length);
   }, []);
 
+  const prev = useCallback(() => {
+    setCurrent((c) => (c - 1 + heroSlides.length) % heroSlides.length);
+  }, []);
+
   useEffect(() => {
-    const timer = setInterval(next, 6000);
+    const timer = setInterval(next, 5000);
     return () => clearInterval(timer);
   }, [next]);
 
   const slide = heroSlides[current];
 
-  const variants = {
-    enter: (dir: number) => ({
-      x: dir > 0 ? "100%" : "-100%",
-      opacity: 0,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
-    },
-    exit: (dir: number) => ({
-      x: dir > 0 ? "-100%" : "100%",
-      opacity: 0,
-      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
-    }),
+  const go = (href?: string) => {
+    if (!href) return;
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const textVariants = {
-    hidden: { y: 40, opacity: 0 },
-    visible: (i: number) => ({
-      y: 0,
-      opacity: 1,
-      transition: { delay: 0.3 + i * 0.15, duration: 0.7, ease: "easeOut" },
-    }),
-  };
+  const bottomCards = [
+    {
+      icon: <Trash2 className="h-9 w-9 sm:h-10 sm:w-10 lg:h-11 lg:w-11 text-primary-500" strokeWidth={1.8} />,
+      title: "E-Waste & Scrap",
+      text: "Electronic, industrial, metal, and recyclable scrap handling.",
+    },
+    {
+      icon: <Truck className="h-9 w-9 sm:h-10 sm:w-10 lg:h-11 lg:w-11 text-primary-500" strokeWidth={1.8} />,
+      title: "Collection & Recycling",
+      text: "Pickup, segregation, dismantling, recycling, and disposal.",
+    },
+    {
+      icon: <CalendarDays className="h-9 w-9 sm:h-10 sm:w-10 lg:h-11 lg:w-11 text-primary-500" strokeWidth={1.8} />,
+      title: "Metal Recovery",
+      text: "Recovery of Platinum, Palladium, and Rhodium from industrial waste.",
+    },
+  ];
 
   return (
     <section
       id="home"
-      className="relative h-screen min-h-[600px] overflow-hidden"
-      aria-label="Hero section"
+      className="relative overflow-hidden bg-[#eef3ef] pt-[86px] xl:pt-[134px]"
     >
-      {/* Slides */}
-      <AnimatePresence custom={direction} mode="sync">
-        <motion.div
-          key={slide.id}
-          custom={direction}
-          variants={variants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          className={`absolute inset-0 bg-gradient-to-br ${slide.bgGradient}`}
+      <div className="relative lg:min-h-[860px]">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_left_center,rgba(137,201,126,0.23),transparent_38%),linear-gradient(90deg,#edf5ee_0%,#f2f1ec_45%,#eceaf5_100%)]" />
+
+        {/* Dotted decorations */}
+        <div className="absolute left-[58px] top-[78px] hidden h-24 w-24 bg-[radial-gradient(#1f2937_1.7px,transparent_1.7px)] [background-size:12px_12px] lg:block" />
+        <div className="absolute right-[230px] top-[165px] hidden h-36 w-36 rounded-full bg-[radial-gradient(#111827_1.7px,transparent_1.7px)] [background-size:12px_12px] lg:block" />
+        <div className="absolute left-0 bottom-[10px] hidden h-24 w-24 bg-[radial-gradient(#111827_1.7px,transparent_1.7px)] [background-size:12px_12px] lg:block" />
+
+        {/* Decorative line icons */}
+        <div className="pointer-events-none absolute left-[80px] top-[470px] hidden text-white/80 lg:block">
+          <svg width="76" height="92" viewBox="0 0 76 92" fill="none">
+            <path d="M18 20h32l-4 48H22L18 20Z" stroke="currentColor" strokeWidth="2" />
+            <path d="M14 20h40" stroke="currentColor" strokeWidth="2" />
+            <path d="M26 20c0-8 4-12 8-12s8 4 8 12" stroke="currentColor" strokeWidth="2" />
+            <path d="M10 8 64 80" stroke="currentColor" strokeWidth="2" />
+            <path d="M64 8 10 80" stroke="currentColor" strokeWidth="2" />
+            <circle cx="24" cy="76" r="3" stroke="currentColor" strokeWidth="2" />
+            <circle cx="44" cy="76" r="3" stroke="currentColor" strokeWidth="2" />
+          </svg>
+        </div>
+
+        <div className="pointer-events-none absolute left-1/2 top-[110px] hidden -translate-x-1/2 text-white/70 lg:block">
+          <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+            <path d="M33 4 45 18l-7 2 6 11c2 4 0 9-4 11l-7 4" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M64 39 57 56l-7-5-6 11c-2 4-7 6-11 4l-8-3" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M10 29 24 17l2 8h13c5 0 9 3 10 8l1 8" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+
+        {/* Desktop arrows */}
+        <button
+          onClick={prev}
+          aria-label="Previous slide"
+          className="absolute left-5 top-[42%] z-20 hidden h-14 w-14 items-center justify-center rounded-md bg-white text-slate-900 shadow-sm transition hover:bg-primary-500 hover:text-white lg:inline-flex"
         >
-          {/* Animated mesh overlay */}
-          <div className="absolute inset-0 opacity-30">
-            <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <radialGradient id="g1" cx="20%" cy="30%" r="50%">
-                  <stop offset="0%" stopColor="#22c55e" stopOpacity="0.4" />
-                  <stop offset="100%" stopColor="transparent" />
-                </radialGradient>
-                <radialGradient id="g2" cx="80%" cy="70%" r="50%">
-                  <stop offset="0%" stopColor="#1a75c4" stopOpacity="0.3" />
-                  <stop offset="100%" stopColor="transparent" />
-                </radialGradient>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#g1)" />
-              <rect width="100%" height="100%" fill="url(#g2)" />
-            </svg>
-          </div>
+          <ArrowLeft className="h-6 w-6" />
+        </button>
 
-          {/* Dot pattern */}
-          <div className="absolute inset-0 dot-pattern opacity-20" />
+        <button
+          onClick={next}
+          aria-label="Next slide"
+          className="absolute right-5 top-[42%] z-20 hidden h-14 w-14 items-center justify-center rounded-md bg-white text-slate-900 shadow-sm transition hover:bg-primary-500 hover:text-white lg:inline-flex"
+        >
+          <ArrowRight className="h-6 w-6" />
+        </button>
 
-          {/* Floating Particles */}
-          {particles.map((p) => (
-            <motion.div
-              key={p.id}
-              className="absolute rounded-full bg-primary-400/40"
-              style={{
-                width: p.size,
-                height: p.size,
-                left: `${p.x}%`,
-                top: `${p.y}%`,
-              }}
-              animate={{
-                y: [0, -40, 0],
-                opacity: [0.4, 0.8, 0.4],
-                scale: [1, 1.2, 1],
-              }}
-              transition={{
-                duration: p.duration,
-                delay: p.delay,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
-
-          {/* Large decorative circle */}
-          <motion.div
-            className="absolute -right-32 top-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-white/5"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-          >
-            <div className="absolute inset-8 rounded-full border border-white/5" />
-            <div className="absolute inset-16 rounded-full border border-primary-500/10" />
-          </motion.div>
-
-          {/* Recycling symbol large watermark */}
-          <div className="absolute right-10 top-1/2 -translate-y-1/2 text-[300px] opacity-[0.03] select-none pointer-events-none font-display font-black">
-            ♻
-          </div>
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Content */}
-      <div className="relative z-10 h-full flex items-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="max-w-3xl">
+        <div className="mx-auto w-full max-w-[1820px] px-4 sm:px-6 xl:px-10">
+          <div className="grid items-center gap-8 pt-8 pb-10 sm:pt-10 sm:pb-12 lg:min-h-[620px] lg:grid-cols-[1.02fr_0.98fr] lg:gap-10 lg:pt-16 lg:pb-48">
+            {/* Left content */}
             <AnimatePresence mode="wait">
-              <div key={`content-${slide.id}`}>
-                {/* Badge */}
-                <motion.div
-                  custom={0}
-                  variants={textVariants}
-                  initial="hidden"
-                  animate="visible"
-                  className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-6"
-                >
-                  <span className="w-2 h-2 rounded-full bg-primary-400 animate-pulse-slow" />
-                  <span className="text-white/90 text-sm font-medium tracking-wide">
-                    {slide.badge}
-                  </span>
-                </motion.div>
+              <motion.div
+                key={`content-${slide.id}`}
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.45 }}
+                className="relative z-10 mx-auto w-full max-w-[620px] lg:ml-auto lg:mr-0"
+              >
+                <div className="text-sm sm:text-[16px] font-semibold text-primary-500">
+                  {slide.badge || "Waste Pickup"}
+                </div>
 
-                {/* Headline */}
-                <motion.h1
-                  custom={1}
-                  variants={textVariants}
-                  initial="hidden"
-                  animate="visible"
-                  className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black text-white leading-tight mb-3"
-                >
-                  {slide.headline}
-                  <br />
-                  <span className="eco-gradient-text">{slide.headlineAccent}</span>
-                </motion.h1>
+                <h1 className="mt-3 sm:mt-4 max-w-[540px] font-serif text-[38px] leading-[0.98] font-bold text-slate-900 sm:text-5xl md:text-6xl xl:text-[72px]">
+                  {slide.headline} <span className="block">{slide.headlineAccent}</span>
+                </h1>
 
-                {/* Subheadline */}
-                <motion.p
-                  custom={2}
-                  variants={textVariants}
-                  initial="hidden"
-                  animate="visible"
-                  className="text-white/70 text-lg sm:text-xl max-w-xl mb-8 leading-relaxed"
-                >
+                <p className="mt-4 sm:mt-5 max-w-[520px] text-[16px] leading-7 text-slate-600 sm:text-[18px] sm:leading-8 lg:text-[20px]">
                   {slide.subheadline}
-                </motion.p>
+                </p>
 
-                {/* CTA Buttons */}
-                <motion.div
-                  custom={3}
-                  variants={textVariants}
-                  initial="hidden"
-                  animate="visible"
-                  className="flex flex-wrap gap-4 items-center"
-                >
-                  <a
-                    href={slide.cta.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      document.querySelector(slide.cta.href)?.scrollIntoView({ behavior: "smooth" });
-                    }}
-                    className="btn-primary text-base"
+                <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
+                  <button
+                    onClick={() => go(slide.cta?.href)}
+                    className="inline-flex min-h-[50px] sm:min-h-[56px] items-center justify-center rounded-md bg-primary-500 px-6 sm:px-10 text-[15px] sm:text-[16px] font-bold text-white transition hover:bg-primary-600"
                   >
-                    {slide.cta.label}
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </a>
-                  <a
-                    href={slide.ctaSecondary.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      document.querySelector(slide.ctaSecondary.href)?.scrollIntoView({ behavior: "smooth" });
-                    }}
-                    className="btn-outline text-base"
-                  >
-                    {slide.ctaSecondary.label}
-                  </a>
-                </motion.div>
+                    {slide.cta?.label || "Read More"}
+                  </button>
 
-                {/* Stat Badge */}
-                <motion.div
-                  custom={4}
-                  variants={textVariants}
-                  initial="hidden"
-                  animate="visible"
-                  className="mt-10 inline-flex items-center gap-3 bg-black/20 backdrop-blur-sm border border-white/10 rounded-2xl px-5 py-3"
-                >
-                  <div className="text-3xl font-display font-black text-primary-400">
-                    {slide.stat.value}
-                  </div>
-                  <div className="text-white/60 text-sm leading-tight">
-                    {slide.stat.label}
-                  </div>
-                </motion.div>
-              </div>
+                  {slide.ctaSecondary?.href && (
+                    <button
+                      onClick={() => go(slide.ctaSecondary?.href)}
+                      className="inline-flex min-h-[50px] sm:min-h-[56px] items-center justify-center rounded-md border border-slate-300 bg-white px-6 sm:px-8 text-[15px] sm:text-[16px] font-semibold text-slate-800 transition hover:border-primary-500 hover:text-primary-600"
+                    >
+                      {slide.ctaSecondary?.label || "Learn More"}
+                    </button>
+                  )}
+                </div>
+              </motion.div>
             </AnimatePresence>
+
+            {/* Right image */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`image-${slide.id}`}
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.45 }}
+                className="relative z-10 mx-auto flex w-full max-w-[760px] items-center justify-center"
+              >
+                <div className="relative h-[240px] w-full sm:h-[320px] md:h-[380px] lg:h-[520px]">
+                  <Image
+                    src={slide.image}
+                    alt={slide.headline}
+                    fill
+                    priority
+                    className="object-contain object-center"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Mobile arrows */}
+            <div className="flex items-center justify-center gap-3 lg:hidden">
+              <button
+                onClick={prev}
+                aria-label="Previous slide"
+                className="inline-flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-md bg-white text-slate-900 shadow-sm"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </button>
+              <button
+                onClick={next}
+                aria-label="Next slide"
+                className="inline-flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-md bg-white text-slate-900 shadow-sm"
+              >
+                <ArrowRight className="h-5 w-5" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom white curved band - desktop only */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-[175px] bg-white [clip-path:ellipse(80%_100%_at_50%_100%)] lg:block" />
+
+        {/* Bottom cards */}
+        <div className="relative z-20 px-4 pb-10 sm:px-5 sm:pb-12 lg:absolute lg:inset-x-0 lg:bottom-0 lg:px-0 lg:pb-0 lg:translate-y-[24%]">
+          <div className="mx-auto grid w-full max-w-[980px] gap-4 sm:gap-5 md:grid-cols-3 lg:gap-6">
+            {bottomCards.map((card) => (
+              <div
+                key={card.title}
+                className="relative mx-auto flex min-h-[220px] sm:min-h-[240px] lg:min-h-[320px] w-full max-w-[320px] flex-col items-center justify-center overflow-hidden bg-white px-5 sm:px-6 lg:px-7 pt-8 sm:pt-9 lg:pt-10 pb-6 sm:pb-7 lg:pb-8 text-center shadow-[0_20px_35px_rgba(15,23,42,0.10)]"
+                style={{
+                  borderRadius: "18px 18px 34px 34px / 12px 12px 34px 34px",
+                  clipPath: "polygon(8% 0%, 92% 0%, 100% 14%, 92% 100%, 8% 100%, 0% 14%)",
+                }}
+              >
+                <div className="absolute inset-x-4 top-0 h-4 rounded-b-[20px] bg-[#f4f4f4]" />
+                <div className="mb-4 sm:mb-5 lg:mb-6">{card.icon}</div>
+                <h3 className="text-[20px] sm:text-[21px] lg:text-[22px] font-bold tracking-tight text-slate-900">
+                  {card.title}
+                </h3>
+                <p className="mt-3 sm:mt-4 max-w-[220px] text-[14px] sm:text-[15px] lg:text-[16px] leading-6 sm:leading-7 text-slate-600">
+                  {card.text}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
-
-      {/* Slide Controls */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-4">
-        {heroSlides.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => goTo(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            className={`transition-all duration-500 rounded-full ${
-              i === current
-                ? "w-8 h-2 bg-primary-400"
-                : "w-2 h-2 bg-white/30 hover:bg-white/60"
-            }`}
-          />
-        ))}
-      </div>
-
-      {/* Arrow Controls */}
-      <button
-        onClick={() => { setDirection(-1); setCurrent((c) => (c - 1 + heroSlides.length) % heroSlides.length); }}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white transition-all duration-300 hover:scale-110 hidden sm:flex"
-        aria-label="Previous slide"
-      >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-      <button
-        onClick={next}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white transition-all duration-300 hover:scale-110 hidden sm:flex"
-        aria-label="Next slide"
-      >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-
-      {/* Scroll Indicator */}
-      <motion.div
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 1.5, repeat: Infinity }}
-        className="absolute bottom-8 right-8 z-20 flex flex-col items-center gap-1 text-white/40 hidden md:flex"
-      >
-        <span className="text-xs tracking-widest uppercase">Scroll</span>
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </motion.div>
     </section>
   );
 }

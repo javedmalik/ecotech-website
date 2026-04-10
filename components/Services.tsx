@@ -1,99 +1,108 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { ArrowRight, Recycle, Trash2, Truck } from "lucide-react";
 import { servicesContent } from "@/content/services";
 
-export default function Services() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+const serviceIcons = [Trash2, Truck, Recycle];
 
-  const container = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.1 } },
-  };
-  const card = {
-    hidden: { y: 50, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
-  };
+export default function Services() {
+  const top = servicesContent.services.slice(0, 3);
 
   return (
-    <section id="services" className="relative section-padding bg-white dark:bg-[#0b1a0e] overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 dot-pattern opacity-30 dark:opacity-10" />
+    <section
+      id="services"
+      className="relative overflow-hidden bg-[#f3f7f4] py-20 sm:py-24 lg:py-28"
+    >
+      {/* soft texture / overlay */}
+      <div className="absolute inset-0 opacity-[0.18] [background:radial-gradient(circle_at_20%_20%,rgba(15,23,42,0.05),transparent_28%),radial-gradient(circle_at_80%_70%,rgba(15,23,42,0.05),transparent_26%)]" />
+      <div className="absolute inset-0 opacity-[0.08] [background-image:radial-gradient(rgba(15,23,42,0.35)_0.7px,transparent_0.7px)] [background-size:22px_22px]" />
 
-      <div className="container-max relative z-10" ref={ref}>
-        {/* Header */}
-        <motion.div
-          initial={{ y: 30, opacity: 0 }}
-          animate={inView ? { y: 0, opacity: 1 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <p className="text-primary-500 font-semibold tracking-widest uppercase text-sm mb-3">
+      {/* right decorative dots */}
+      <div className="absolute right-0 top-10 hidden h-[320px] w-[240px] opacity-20 lg:block">
+        <div className="h-full w-full bg-[radial-gradient(#94a3b8_1.7px,transparent_1.7px)] [background-size:16px_16px]" />
+      </div>
+
+      <div className="mx-auto w-full max-w-[1220px] px-5 sm:px-6 xl:px-0">
+        <div className="mx-auto max-w-3xl text-center">
+          <div className="text-[15px] font-semibold text-primary-500">
             {servicesContent.tagline}
-          </p>
-          <h2 className="font-display text-4xl sm:text-5xl font-black text-gray-900 dark:text-white mb-4">
+          </div>
+
+          <h2 className="mt-5 font-serif text-4xl font-bold leading-[0.98] tracking-tight text-slate-900 sm:text-5xl xl:text-[64px]">
             {servicesContent.heading}
           </h2>
-          <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto text-lg">
+
+          <p className="mx-auto mt-5 max-w-2xl text-[17px] leading-8 text-slate-600">
             {servicesContent.subheading}
           </p>
-        </motion.div>
+        </div>
 
-        {/* Cards */}
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {servicesContent.services.map((service) => (
-            <motion.div
-              key={service.id}
-              variants={card}
-              whileHover={{ y: -8, scale: 1.02 }}
-              transition={{ duration: 0.3 }}
-              className="group relative bg-gray-50 dark:bg-white/[0.03] border border-gray-200 dark:border-white/10 rounded-3xl p-6 overflow-hidden cursor-default"
-            >
-              {/* Gradient hover bg */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-3xl`} />
+        <div className="mt-14 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+          {top.map((service, i) => {
+            const Icon = serviceIcons[i] || Recycle;
 
-              {/* Icon */}
-              <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center text-2xl mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                {service.icon}
-              </div>
+            return (
+              <motion.article
+                key={service.id}
+                initial={{ opacity: 0, y: 34 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ duration: 0.45, delay: i * 0.08 }}
+                className="group relative mx-auto flex w-full max-w-[380px] flex-col overflow-visible rounded-[22px] bg-white px-7 pb-14 pt-7 text-center shadow-[0_20px_45px_rgba(15,23,42,0.06)]"
+                style={{
+                  borderRadius: "22px 22px 56px 56px",
+                }}
+              >
+                {/* image area */}
+                <div className="relative overflow-hidden rounded-[18px] rounded-b-[90px]">
+                  <div className="relative h-[220px] w-full bg-slate-200">
+                    <Image
+                      src={service.image || "/images/services/service-1.jpg"}
+                      alt={service.title}
+                      fill
+                      className="object-cover transition duration-500 group-hover:scale-[1.04]"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 380px"
+                    />
+                  </div>
+                </div>
 
-              {/* Content */}
-              <h3 className="font-display text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary-500 transition-colors duration-300">
-                {service.title}
-              </h3>
-              <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-5">
-                {service.description}
-              </p>
+                {/* bucket badge */}
+                <div className="relative z-10 -mt-10 flex justify-center">
+                  <div
+                    className="flex h-[92px] w-[92px] items-center justify-center bg-white shadow-[0_16px_28px_rgba(15,23,42,0.08)]"
+                    style={{
+                      clipPath: "polygon(14% 0%, 86% 0%, 76% 100%, 24% 100%)",
+                      borderRadius: "14px",
+                    }}
+                  >
+                    <Icon
+                      className="h-10 w-10 text-primary-500"
+                      strokeWidth={1.8}
+                    />
+                  </div>
+                </div>
 
-              {/* Highlights */}
-              <ul className="space-y-2">
-                {service.highlights.map((h) => (
-                  <li key={h} className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                    <svg className="w-4 h-4 text-primary-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                    {h}
-                  </li>
-                ))}
-              </ul>
+                <h3 className="mt-7 text-[22px] font-bold tracking-tight text-slate-900 sm:text-[24px]">
+                  {service.title}
+                </h3>
 
-              {/* Arrow */}
-              <div className="mt-5 flex items-center gap-1 text-primary-500 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                Learn More
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+                <p className="mt-4 text-[16px] leading-8 text-slate-600">
+                  {service.description}
+                </p>
+
+                {/* bottom circle arrow */}
+                <button
+                  aria-label={`Open ${service.title}`}
+                  className="absolute bottom-[-32px] left-1/2 inline-flex h-16 w-16 -translate-x-1/2 items-center justify-center rounded-full bg-[#f3f3f3] text-slate-900 shadow-sm transition hover:bg-primary-500 hover:text-white"
+                >
+                  <ArrowRight className="h-7 w-7" strokeWidth={1.8} />
+                </button>
+              </motion.article>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
