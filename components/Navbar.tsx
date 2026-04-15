@@ -84,22 +84,20 @@ export default function Navbar() {
               <div className="flex items-center gap-2 whitespace-nowrap">
                 <Mail className="h-4 w-4 text-[#2FB41F]" />
                 <span className="text-white/90">
-                  Email: <strong className="font-semibold text-white">info@example.com</strong>
+                  Email: <strong className="font-semibold text-white">ecotechrecyclerspvtltd@gmail.com</strong>
                 </span>
               </div>
 
               <div className="flex items-center gap-2 whitespace-nowrap">
                 <MapPin className="h-4 w-4 text-[#2FB41F]" />
                 <span className="text-white/90">
-                  Address: <strong className="font-semibold text-white">8302 Preston Rd. Maine 9380</strong>
+                  Address: <strong className="font-semibold text-white">Khasra NO. 410 Noornagar, Lisari Road, Lisari Gate, Meerut(UP) - 250002</strong>
                 </span>
               </div>
             </div>
 
             <div className="flex h-full items-center">
-              <button className="px-6 text-[15px] font-semibold text-white transition hover:text-[#2FB41F]">
-                Login
-              </button>
+             
 
               <div className="flex h-full items-center border-l border-white/15 pl-3">
                 <a
@@ -155,13 +153,13 @@ export default function Navbar() {
               </div>
 
               <div className="leading-none">
-                <div className="text-[22px] font-black tracking-tight text-[#276CF5]">
-                  Ecotech Recyclers
-                </div>
-                <div className="mt-1 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#2FB41F]">
-                  Waste To Worth
-                </div>
-              </div>
+  <div className="text-[22px] font-black uppercase tracking-tight text-[#276CF5]">
+    Ecotech Recyclers
+  </div>
+  <div className="mt-1 text-[10px] font-semibold tracking-[0.28em] text-[#2FB41F] text-right">
+    Waste To Worth
+  </div>
+</div>
             </button>
 
             {/* Desktop Nav */}
@@ -189,16 +187,20 @@ export default function Navbar() {
               <div className="mr-6 flex items-center gap-4 border-l border-r border-slate-200 px-6 2xl:px-7">
                 <Phone className="h-5 w-5 text-[#2FB41F]" />
                 <span className="whitespace-nowrap text-[18px] font-medium tracking-tight text-slate-800">
-                  (239)-543-217-0108
+                  +91-855-009-8230
+                  <p>
+                     +91-936-810-2217
+                  </p>
                 </span>
+                
               </div>
 
-              <button
+              {/* <button
                 aria-label="Search"
                 className="mr-5 inline-flex h-14 w-14 items-center justify-center rounded-full border border-slate-300 text-slate-700 transition hover:border-[#2FB41F] hover:text-[#2FB41F]"
               >
                 <Search className="h-5 w-5" />
-              </button>
+              </button> */}
 
               <button
                 onClick={() => navigate("#contact")}

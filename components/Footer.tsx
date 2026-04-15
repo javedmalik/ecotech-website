@@ -154,13 +154,20 @@ export default function Footer() {
 
               <div className="flex items-start gap-3">
                 <Mail className="mt-1 h-5 w-5 shrink-0 text-primary-400" />
-                <span>info@ecotechrecyclers.in</span>
+                <span>ecotechrecyclerspvtltd@gmail.com</span>
               </div>
 
               <div className="flex items-start gap-3">
                 <Phone className="mt-1 h-5 w-5 shrink-0 text-primary-400" />
-                <span>+91 XXXXX XXXXX</span>
+                <span>+91-855-009-8230</span>
+                
               </div>
+              <div className="flex items-start gap-3">
+                <Phone className="mt-1 h-5 w-5 shrink-0 text-primary-400" />
+               <span>+91-936-810-2217</span>
+                
+              </div>
+              
             </div>
 
             <div className="mt-8 flex items-center gap-3">
